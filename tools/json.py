@@ -1,14 +1,14 @@
-# json.py
-from tools.generator.file import FileGenerator
-import json
+# Json Generator
 
-class JsonGenerator(FileGenerator):
-	"""docstring for JsonGenerator"""
+import json
+from tools.file import Generator_File
+
+class Generator_Json(Generator_File):
+	"""docstring for Generator_Json"""
 	def __init__(self, path_file):
-		super(JsonGenerator, self).__init__(path_file)
+		super(Generator_Json, self).__init__(path_file)
 		self.path_file = path_file
 		self.json = self.load()
-
 
 	def set(self, key, value):
 		self.json[str(key)] = value
@@ -77,10 +77,11 @@ class JsonGenerator(FileGenerator):
 
 	def save(self):
 		value = json.dumps(self.json, indent="\t")
-		self.WriteFile(value)
+		self.Write(value)
 		pass
 
 	def read(self):
 		value = json.dumps(self.json, indent="\t")
 		print(value)
 		pass
+

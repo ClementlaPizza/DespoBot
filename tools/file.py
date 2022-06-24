@@ -1,3 +1,5 @@
+# file generator
+
 import os
 
 class Generator_File(object):
@@ -5,10 +7,10 @@ class Generator_File(object):
 	def __init__(self, path_file):
 		super(Generator_File, self).__init__()
 		self.path_file = path_file
-		self.CreateFile()
-		self.LoadFile()
+		self.Create()
+		self.Load()
 
-	def CreateFile(self):
+	def Create(self):
 		if not os.path.exists(self.path_file):
 			file = open(self.path_file, "w", encoding="utf8")
 			# print(self.path_file)
@@ -17,13 +19,13 @@ class Generator_File(object):
 			pass
 		pass
 
-	def LoadFile(self):
+	def Load(self):
 		file = open(self.path_file, "r", encoding="utf8")
 		self.read_file = file.read()
 		file.close()
 		pass
 
-	def WriteFile(self, content=""):
+	def Write(self, content=""):
 		file = open(self.path_file, "w", encoding="utf8")
 		file.write(content)
 		# print(f"WriteFile {content}")
@@ -35,6 +37,14 @@ class Generator_File(object):
 		file.write(content)
 		# print(f"AddContent {content}")
 		file.close()
+		pass
+
+	def AddLine(self, content="\n"):
+		file = open(self.path_file, "a", encoding="utf8")
+		file.write("\n" + content)
+		# print(f"AddLine {content}")
+		file.close()
+		pass
 		pass
 
 	def EditLine(self, number, content=""):
