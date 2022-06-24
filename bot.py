@@ -1,14 +1,11 @@
 #!"E:\Program Files\Python310\venv\despobot\Scripts\python.exe"
 
-from ressources.safe import *
 import discord
-import os
 from discord.ext import commands
-from info.version import *
+import os
+from safe import TOKEN_DISCORD, PREFIX, ROLE_ARCHITECTE
 
-#Le bot
 bot = commands.Bot(command_prefix=PREFIX, intents=discord.Intents.all())
-bot.remove_command("help")
 
 @bot.command()
 async def load(ctx, extension):
@@ -18,19 +15,9 @@ async def load(ctx, extension):
 async def unload(ctx, extension):
 	bot.unload_extension(f'cogs.{extension}')
 
-if PREFIX == "!": # Mode normal
-	for filename in os.listdir('./utilitary'):
+for folder in os.listdir('./extensions'):
+	for filename in os.listdir(f'./extensions/{folder}'):
 		if filename.endswith('.py'):
-			bot.load_extension(f'utilitary.{filename[:-3]}')
+			bot.load_extension(f'extensions.{folder}.{filename[:-3]}')
 
-	for filename in os.listdir('./games'):
-		if filename.endswith('.py'):
-			bot.load_extension(f'games.{filename[:-3]}')
-
-else: # Mode test / Labo
-	for filename in os.listdir('./labo'):
-		if filename.endswith('.py'):
-			bot.load_extension(f'labo.{filename[:-3]}')
-
-#RUN
-bot.run(TOKEN)
+bot.run(TOKEN_DISCORD)
