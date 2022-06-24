@@ -1,13 +1,14 @@
-# Bot.py
+#!"E:\Program Files\Python310\venv\despobot\Scripts\python.exe"
 
-from ressources.secret import *
+from ressources.safe import *
 import discord
 import os
 from discord.ext import commands
-from discord_slash import SlashCommand
+from info.version import *
 
-bot = commands.Bot(command_prefix=prefix, intents=discord.Intents.all())
-slash = SlashCommand(bot, sync_commands=True, sync_on_cog_reload = True)
+#Le bot
+bot = commands.Bot(command_prefix=PREFIX, intents=discord.Intents.all())
+bot.remove_command("help")
 
 @bot.command()
 async def load(ctx, extension):
@@ -17,17 +18,19 @@ async def load(ctx, extension):
 async def unload(ctx, extension):
 	bot.unload_extension(f'cogs.{extension}')
 
-for filename in os.listdir('./cogs'):
-	if filename.endswith('.py'):
-		bot.load_extension(f'cogs.{filename[:-3]}')
+if PREFIX == "!": # Mode normal
+	for filename in os.listdir('./utilitary'):
+		if filename.endswith('.py'):
+			bot.load_extension(f'utilitary.{filename[:-3]}')
 
-for filename in os.listdir('./cogs/Jeux'):
-	if filename.endswith('.py'):
-		bot.load_extension(f'cogs.Jeux.{filename[:-3]}')
+	for filename in os.listdir('./games'):
+		if filename.endswith('.py'):
+			bot.load_extension(f'games.{filename[:-3]}')
 
-for filename in os.listdir('./cogs/Moderations'):
-	if filename.endswith('.py'):
-		bot.load_extension(f'cogs.Moderations.{filename[:-3]}')
+else: # Mode test / Labo
+	for filename in os.listdir('./labo'):
+		if filename.endswith('.py'):
+			bot.load_extension(f'labo.{filename[:-3]}')
 
 #RUN
-bot.run(token)
+bot.run(TOKEN)

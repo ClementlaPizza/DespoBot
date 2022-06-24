@@ -1,4 +1,1 @@
-discord==1.7.3
-discord-py-slash-command==2.3.2
-pip
-discord_components==1.1.4
+discord.py
